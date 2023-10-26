@@ -308,7 +308,7 @@ class ParentRepositoryTests {
                     }
                   ]
                 }
-                """.formatted(entityUrl, entityUrl);
+                """.formatted(entityUrl);
 
         ResponseEntity<String> response3 = testRestTemplate.exchange(
                 entityUrl, HttpMethod.PUT, new HttpEntity<>(request3, requestHeaders), String.class);
