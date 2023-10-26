@@ -1,0 +1,30 @@
+# Build
+bin
+target
+build
+build-profile
+
+# Java
+.apt_generated
+.apt_generated_tests
+
+# Eclise
+/.metadata
+/.sonarlint
+
+# IDEA
+.idea
+*.iml
+
+# VS Code
+chrome-debug-userdatadir
+.VSCodeCounter
+
+# Misc
+.temp*
+.DS_Store
+.scannerwork
+/sonar-cache
+bom.json
+/libs
+coverage
