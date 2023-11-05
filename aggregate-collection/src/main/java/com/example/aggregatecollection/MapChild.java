@@ -2,8 +2,6 @@ package com.example.aggregatecollection;
 
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -14,7 +12,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "parent_id", "name" }) })
-public class Child {
+public class MapChild {
 
     @Id
     private UUID id = UUID.randomUUID();
@@ -23,8 +21,7 @@ public class Child {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
-    private Parent parent;
+    private MapParent parent;
 
     public UUID getId() {
         return id;
@@ -42,11 +39,11 @@ public class Child {
         this.name = name;
     }
 
-    public Parent getParent() {
+    public MapParent getParent() {
         return parent;
     }
 
-    public void setParent(Parent parent) {
+    public void setParent(MapParent parent) {
         if (this.parent != parent) {
             if (this.parent != null) {
                 this.parent.removeChild(this);

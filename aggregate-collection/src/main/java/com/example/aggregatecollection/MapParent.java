@@ -1,20 +1,19 @@
 package com.example.aggregatecollection;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.MapKey;
 import jakarta.persistence.OneToMany;
 
 @Entity
-public class Parent {
+public class MapParent {
 
     @Id
     private UUID id = UUID.randomUUID();
@@ -22,8 +21,8 @@ public class Parent {
     private String name;
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Child> children = new ArrayList<>();
+    @MapKey
+    private Map<UUID, MapChild> children = new LinkedHashMap<>();
 
     public UUID getId() {
         return id;
@@ -41,20 +40,27 @@ public class Parent {
         this.name = name;
     }
 
-    public List<Child> getChildren() {
-        return Collections.unmodifiableList(children);
+    public Collection<MapChild> getChildren() {
+        return children.values();
     }
 
-    public void addChild(Child child) {
-        if (!children.contains(child)) {
-            children.add(child);
+    public void setChildren(Collection<MapChild> children) {
+        this.children.clear();
+        for (var child : children) {
+            addChild(child);
+        }
+    }
+
+    public void addChild(MapChild child) {
+        if (!children.containsValue(child)) {
+            children.put(child.getId(), child);
             child.setParent(this);
         }
     }
 
-    public void removeChild(Child child) {
-        if (children.contains(child)) {
-            children.remove(child);
+    public void removeChild(MapChild child) {
+        if (children.containsValue(child)) {
+            children.remove(child.getId(), child);
             child.setParent(null);
         }
     }

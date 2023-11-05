@@ -2,11 +2,11 @@ package com.example.aggregatecollection;
 
 import org.junit.jupiter.api.Test;
 
-class ParentRepositoryTests extends AbstractParentRepositoryTests {
+class MapParentRepositoryTests extends AbstractParentRepositoryTests {
 
     @Override
     protected String getCollectionUrlPath() {
-        return getCollectionUrlPath(Parent.class);
+        return getCollectionUrlPath(MapParent.class);
     }
 
     @Test
